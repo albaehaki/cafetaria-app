@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
@@ -7,8 +8,10 @@ import Header from '@/components/Header'
 // import Footer from '../components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
+import { DataContext } from '@/Context'
 
 export default function Home() {
+  const data = useContext(DataContext)
   return (
     <>
     <Header />
@@ -22,7 +25,7 @@ export default function Home() {
       <main className='bg-white text-red-900 h-screen'>
        <div>
         <p>lorem5
-
+{data.nama}
         </p>
        </div>
       </main>

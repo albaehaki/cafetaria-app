@@ -1,9 +1,10 @@
-import { Fragment, useState } from 'react'
+import Link from 'next/link';
+import { Fragment, useState, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { MinusIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import 'tailwindcss/tailwind.css'
 
-const products = [
+let products = [
   {
     id: 1,
     name: 'Throwback Hip Bag',
@@ -28,8 +29,15 @@ const products = [
   // More products...
 ]
 
-export default function Example() {
-  const [open, setOpen] = useState(true)
+export default function Cart({open, setOpen}) {
+    
+  const [count, setCount] = useState(0)
+  const buttonOrder = useRef(null)
+
+
+  const handleOrder = (e) => {
+    console.log("test", e, buttonOrder.current.value)
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -74,12 +82,31 @@ export default function Example() {
                           </button>
                         </div>
                       </div>
+                      <div className="sm:col-span-4 pt-5">
+                        <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                          Nama Pemesan
+                        </label>
+                        <div className="mt-2">
+                          <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            
+                            <input
+                              type="text"
+                              name="username"
+                              id="username"
+                              autoComplete="username"
+                              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                              placeholder="janesmith"
+                            />
+                          </div>
+                        </div>
+                      </div>
 
                       <div className="mt-8">
                         <div className="flow-root">
                           <ul role="list" className="-my-6 divide-y divide-gray-200">
                             {products.map((product) => (
-                              <li key={product.id} className="flex py-6">
+                              <>
+                              <li ref={buttonOrder} key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
                                     src={product.imageSrc}
@@ -98,20 +125,45 @@ export default function Example() {
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                                   </div>
-                                  <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qty {product.quantity}</p>
-
-                                    <div className="flex">
-                                      <button
+                                  <div className="flex  items-end justify-between text-sm">
+                                  <div className="flex ustify-between">
+                                    <button
+                                     onClick={() => {if(product.quantity > 0)  product.quantity--}}
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                       >
-                                        Remove
+                                       
+                                        <PlusIcon className="h-3 w-3" aria-hidden="true" />
+                                      </button>
+                                     </div>
+                                     
+                                    <p className="text-gray-500">{product.quantity}</p>
+
+                                    <div className="flex ustify-between">
+                                    
+                                     
+                                      <button
+                                      onClick={() => {product.quantity++}}
+                                        type="button"
+                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      >
+                                        <MinusIcon className="h-3 w-3" aria-hidden="true" />
+                                       
                                       </button>
                                     </div>
                                   </div>
                                 </div>
                               </li>
+                                  <div className="mt-6">
+                                    <a
+                                    onClick={() => {handleOrder(products)}}
+                                      href="#"
+                                      className="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-3 py-1 text-base font-medium text-white shadow-sm hover:bg-red-700"
+                                    >
+                                      Remove
+                                    </a>
+                                  </div>
+                                  </>
                             ))}
                           </ul>
                         </div>
@@ -125,12 +177,14 @@ export default function Example() {
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                       <div className="mt-6">
-                        <a
-                          href="#"
+                        <Link
+                        onClick={() => {handleOrder(products);}}
+                          href="/cekStatus"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
+                            {/* <Link href="/about"></Link> */}
                           Checkout
-                        </a>
+                        </Link>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
@@ -138,7 +192,10 @@ export default function Example() {
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={() => setOpen(false)}
+                            onClick={() => {
+                                setOpen(false);
+                                
+                            }}
                           >
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>
