@@ -33,7 +33,7 @@ export default function Example() {
   const {listOrder} = useContext(DataContext)
   // hooks
   const {getData, data, dataProduk} = useHome()
-  const [pilihan, setPilihan] = useState("Info Order")
+  const [pilihan, setPilihan] = useState("Daftar Pesanan")
   const [detail, setDetail] = useState([])
 
  
