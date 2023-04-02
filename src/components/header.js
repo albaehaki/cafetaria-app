@@ -40,7 +40,7 @@ export default function Header({setOpen}) {
             <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
           </a>
         </div>
-        <div className="flex lg:hidden">
+        <div className="flex ">
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
