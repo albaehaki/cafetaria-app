@@ -10,45 +10,30 @@ export const ItemTypes = {
     LIST_ITEM: "listItem",
   };
 
-const cardList = [
-  {
-    id: 1,
-    title: "Antrian",
-    items: [
-     
-    ],
-  },
-  {
-    id: 2,
-    title: "Lagi Dimasak",
-    items: [
-    
-    ],
-  },
-  {
-    id: 3,
-    title: "Sudak Siap",
-    items: [
-    
-    ],
-  },
-];
 
 const Card = ({ id, name, setDetail,
     setPilihan, item }) => {
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.CARD,
+    // item: { index },
     collect: (monitor) => ({
+
       isDragging: !!monitor.isDragging(),
     }),
+    // collect: (monitor) => ({
+    //     isDragging: monitor.isDragging(),
+    //   }),
   });
 
   return (
     <button 
     onClick={() => {
         setDetail(item);
-        // console.log(id, )
         setPilihan("Info Order");
+    }}
+  
+    onDragStart={() => {
+        console.log("test drag start", id)
     }}
      ref={drag} className="card" style={{ opacity: isDragging ? 0.5 : 1 }}>
       {name}
@@ -60,14 +45,17 @@ const CardList = ({ id, title, items, onDrop, setDetail,
     setPilihan }) => {
   const [, drop] = useDrop({
     accept: ItemTypes.CARD,
-    drop: (item) => onDrop(item.id, id),
+    // drop: (item, monitor) => {onDrop(item, id)},
   });
 
   return (
-    <div className="card-list w-[300px]  px-5 py-5" ref={drop}>
+    <div className="card-list w-[300px]  px-5 py-5 bg-slate-400" ref={drop} 
+    onDrop={() => {
+        console.log(title,"test drop")
+    }}>
       <h2 className="font-bold bg-slate-200 text-center rounded-sm">{title}</h2>
       <div className="cards ">
-        {items.filter((x, i) => x.statusPesanan === title).map((item) => (
+        {items.filter((x, i) => x.statusPesanan === title).map((item, i) => (
           <Card key={item.id} id={item.id} item={item} name={item.nama} setDetail={setDetail}
           setPilihan={setPilihan} />
         ))}
@@ -84,14 +72,9 @@ const TrelloBoard = ({listOrder,  setDetail,
 
   console.log(listOrder);
   const handleDrop = (cardId, listId) => {
-    const newList = lists.map((list) => {
-      if (list.id === listId) {
-        return { ...list, items: [...list.items, { id: cardId, name: `Task ${cardId}` }] };
-      }
-      return list;
-    });
-    setLists(newList);
+  
   };
+
   const backend = window.ontouchstart === null ? TouchBackend : HTML5Backend;
 
   return (
@@ -101,7 +84,7 @@ const TrelloBoard = ({listOrder,  setDetail,
       options={{ enableTouchEvents: true, delayTouchStart: 100 }}
       >
         {["antrian", "sedang dimasak", "sudah matang"].map((list, i) => (
-          <CardList key={i} title={list}  items={listOrder} onDrop={handleDrop} setDetail={setDetail}
+          <CardList key={i} id={i} title={list}  items={listOrder} onDrop={handleDrop} setDetail={setDetail}
           setPilihan={setPilihan} />
         ))}
       </DndProvider>
