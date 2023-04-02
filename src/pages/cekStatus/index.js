@@ -1,9 +1,33 @@
-
+import React,{ useRef, useContext, useEffect, useState} from 'react'
 import Link from 'next/link'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import 'tailwindcss/tailwind.css'
 
+import { DataContext } from '@/Context'
+import { useHome } from '@/hooks/useHome'
+
 export default function Example() {
+  const {listOrder} = useContext(DataContext)
+  const { getData } = useHome()
+  const [status, setStatus] = useState(null)
+  const formRef = useRef(null)
+  const handleButton = () => {
+    console.log(formRef.current.value)
+    const filtered  = listOrder.filter((x) => x.nama === formRef.current.value)
+    // setStatus([...status, listOrder.filter((x) => x.nama === formRef.current.value)])
+    if(filtered.length !== 0){
+      setStatus(filtered[0].statusPesanan)
+      formRef.current.value = ''
+    }
+    formRef.current.value = ''
+  }
+useEffect(() => {
+  getData()
+}, [])
+
+
+  console.log(listOrder.filter((x) => x.nama === "abdul"))
+  console.log(status)
   return (
     <>
       {/*
@@ -16,7 +40,7 @@ export default function Example() {
       */}
       <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8 m-auto">
-          <p className='font-bold'>Status Orderan anda :</p>
+          <p className='font-bold'>Status Orderan anda : {status === null ? "" : status}</p>
           <form onSubmit={(e) => {
             e.preventDefault()
           }} className="mt-8 space-y-6" 
@@ -26,11 +50,12 @@ export default function Example() {
             {/* <input type="hidden" name="remember" defaultValue="true" /> */}
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
-                <label htmlFor="nama-pemesan" className="sr-only">
+                <label  className="sr-only">
                   Nama Pemesan Makanan
                 </label>
                 <input
-                  id="email-address"
+                  ref={formRef}
+                  // id="email-address"
                   // name="nama-pemesan"
                   type="text"
                  
@@ -56,7 +81,7 @@ export default function Example() {
               </Link>
               <button
               onClick={() =>{
-                console.log("tes")
+                handleButton()
               }}
                 type="submit"
                 className="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

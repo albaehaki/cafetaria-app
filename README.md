@@ -1,3 +1,61 @@
+***** Cafetaria App *****
+
+https://cafetaria-app.vercel.app/
+
+aplikasi ini adalah aplikasi untuk memanage pesanan dari pelanggan
+
+Fitur--------------------
+#Tambah dan hapus Menu/Produk : dapat menambah dan menghapus pesanan
+#Dasboard berisi daftar pesanan : berisi daftar pesanan dan juga pengatus status pesanan
+#pesan : membuat pesanan dan mengirimnya ke penjual
+#cek status pesanan : para pembeli dapat mengecek status pesanannya
+
+---menambahkan produk
+1. masuk ke halaman web appnya 
+2. pilih menu penjual
+3. pilih menu daftar produk di header
+4. lalu isi formnya
+5. kemudian tekan Add
+---menghapus produk
+1. masuk ke halaman web appnya 
+2. pilih menu penjual
+3. pilih menu daftar produk di header
+4. cari produk yang ingin dihapus 
+5. kemudian tekan remove
+---melihat pesanan
+1. masuk ke halaman web appnya 
+2. pilih menu penjual
+3. maka akan muncul daftar pesanan
+---tambah pesanan
+1. masuk ke halaman web appnya 
+2. pilih menu pembeli
+3. maka akan muncul daftar menu
+4. pilih produk yang diinginkan
+5. jika sudah tekan icon keranjang
+6. maka akan muncul sidebar yang berisi daftar produk yang ingin di pesan
+7. masukkan nama pemesan
+8. tekan tombol chekout
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
