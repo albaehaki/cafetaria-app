@@ -7,10 +7,11 @@ export const DataProvider = (props) => {
   const [data, setData] = useState()
   const [dataProduk, setDataProduk] = useState([])
   const [listCart, setListCart] = useState([])
+  const [listOrder, setListOrder] = useState([])
 
   return (
     <DataContext.Provider
-      value={{ nama, setNama, data, setData, dataProduk, setDataProduk, listCart, setListCart }}
+      value={{ nama, setNama, data, setData, dataProduk, setDataProduk, listCart, setListCart, listOrder, setListOrder }}
       {...props}
     />
   );

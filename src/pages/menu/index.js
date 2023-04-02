@@ -7,44 +7,23 @@ import { DataContext } from "@/Context";
 
 // hooks
 import { useHome } from "@/hooks/useHome";
+import { useMenu } from "@/hooks/useMenu";
 
 // Components
 import Header from '@/components/header'
 import  Cart from "@/components/cart";
 
-const products = [
-    {
-      id: 1,
-      name: 'Nasi Goreng',
-      href: '#',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-      imageAlt: "Front of men's Basic Tee in black.",
-      price: '10.000',
-      color: 'Black',
-      
-    },
-    {
-      id: 2,
-      name: 'Nasi Goreng',
-      href: '#',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-      imageAlt: "Front of men's Basic Tee in black.",
-      price: '10.000',
-      color: 'Black',
-      
-    },
-   
-    // More products...
-  ]
+
   
   export default function Example() {
     // context
-    const {dataProduk} = useContext(DataContext)
+    const {dataProduk, listCart, setListCart} = useContext(DataContext)
     // state
     const [open, setOpen] = useState(false)
     const buttonAdd = useRef(null)
     // hooks
     const { getData } = useHome()
+    const { addListProduk, deletListCart, addOrder } = useMenu()
 
     const handleAdd = (e, id) => {
       console.log(e, id ,buttonAdd )
@@ -53,6 +32,8 @@ const products = [
     useEffect(() => {
       getData()
     }, [])
+
+    console.log(listCart)
     return (
         <>
         <Header setOpen={setOpen}/>
@@ -84,14 +65,20 @@ const products = [
                   <p className="text-sm font-medium text-gray-900">{product.harga? product.harga : ''}</p>
                 </div>
                 <button onClick={(e) => {
-                    handleAdd(e.product.id);
+                    addListProduk(product.id, product)
                   }} className=' w-[100%] bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-transform transform hover:scale-95 focus:outline-none focus:shadow-outline'>Add to Chart</button>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <Cart open={open} setOpen={setOpen} />
+      <Cart 
+      addOrder={addOrder}
+      deletListCart={deletListCart}
+      listCart={listCart} 
+      open={open} 
+      setOpen={setOpen} 
+      />
       </>
     )
   }

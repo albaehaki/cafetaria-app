@@ -11,7 +11,7 @@ export const ItemTypes = {
 const cardList = [
   {
     id: 1,
-    title: "To Do",
+    title: "Antrian",
     items: [
       { id: 1, name: "Task 1" },
       { id: 2, name: "Task 2" },
@@ -20,7 +20,7 @@ const cardList = [
   },
   {
     id: 2,
-    title: "In Progress",
+    title: "Lagi Dimasak",
     items: [
       { id: 4, name: "Task 4" },
       { id: 5, name: "Task 5" },
@@ -29,7 +29,7 @@ const cardList = [
   },
   {
     id: 3,
-    title: "Done",
+    title: "Sudak Siap",
     items: [
       { id: 7, name: "Task 7" },
       { id: 8, name: "Task 8" },
@@ -71,9 +71,10 @@ const CardList = ({ id, title, items, onDrop }) => {
   );
 };
 
-const TrelloBoard = () => {
+const TrelloBoard = ({listOrder}) => {
   const [lists, setLists] = useState(cardList);
 
+  console.log(listOrder);
   const handleDrop = (cardId, listId) => {
     const newList = lists.map((list) => {
       if (list.id === listId) {

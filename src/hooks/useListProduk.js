@@ -9,7 +9,7 @@ import {
     update,
     getDatabase,
   } from "firebase/database";
-import app from "@/Services/firebase";
+import app from "@/services/firebase";
 
 // context
 import { DataContext } from '@/Context'
@@ -25,6 +25,7 @@ const addProduk = (e) => {
     // console.log(Object.keys(dataProduk).length)
     set(ref(realtimedb, `product/${dataProduk? Object.keys(dataProduk).length : 0}`),{
           id: e.id,
+          jumlah: 0,
           nama: e.nama,
           harga: e.harga,
           image: e.image,

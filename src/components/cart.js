@@ -1,42 +1,28 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Fragment, useState, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { MinusIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import 'tailwindcss/tailwind.css'
 
-let products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
 
-export default function Cart({open, setOpen}) {
+
+export default function Cart({open, setOpen, listCart, deletListCart, addOrder}) {
+
     
   const [count, setCount] = useState(0)
-  const buttonOrder = useRef(null)
+  const namaPemesan = useRef(null)
+  const router = useRouter();
 
 
-  const handleOrder = (e) => {
-    console.log("test", e, buttonOrder.current.value)
+  const handleOrder = () => {
+    if(namaPemesan.current.value){
+    addOrder(namaPemesan.current.value)
+    router.push('/cekStatus');
+    }else{
+      alert('isi nama pemesan')
+    }
+
   }
 
   return (
@@ -83,17 +69,17 @@ export default function Cart({open, setOpen}) {
                         </div>
                       </div>
                       <div className="sm:col-span-4 pt-5">
-                        <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                        <label  className="block text-sm font-medium leading-6 text-gray-900">
                           Nama Pemesan
                         </label>
                         <div className="mt-2">
                           <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             
                             <input
+                            ref={namaPemesan}
                               type="text"
-                              name="username"
-                              id="username"
-                              autoComplete="username"
+                            
+                             
                               className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                               placeholder="janesmith"
                             />
@@ -104,13 +90,13 @@ export default function Cart({open, setOpen}) {
                       <div className="mt-8">
                         <div className="flow-root">
                           <ul role="list" className="-my-6 divide-y divide-gray-200">
-                            {products.map((product) => (
+                            {listCart.map((product) => (
                               <>
-                              <li ref={buttonOrder} key={product.id} className="flex py-6">
+                              <li  key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
-                                    src={product.imageSrc}
-                                    alt={product.imageAlt}
+                                    src={product.image}
+                                 
                                     className="h-full w-full object-cover object-center"
                                   />
                                 </div>
@@ -119,13 +105,13 @@ export default function Cart({open, setOpen}) {
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>
-                                        <a href={product.href}>{product.name}</a>
+                                        <p>{product.nama}</p>
                                       </h3>
-                                      <p className="ml-4">{product.price}</p>
+                                      <p className="ml-4">{product.harga}</p>
                                     </div>
-                                    <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                    {/* <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}
                                   </div>
-                                  <div className="flex  items-end justify-between text-sm">
+                                  {/* <div className="flex  items-end justify-between text-sm">
                                   <div className="flex ustify-between">
                                     <button
                                      onClick={() => {if(product.quantity > 0)  product.quantity--}}
@@ -151,12 +137,13 @@ export default function Cart({open, setOpen}) {
                                        
                                       </button>
                                     </div>
-                                  </div>
+                                  </div> */}
                                 </div>
                               </li>
                                   <div className="mt-6">
                                     <a
-                                    onClick={() => {handleOrder(products)}}
+                                    onClick={() => {
+                                      deletListCart(product.id)}}
                                       href="#"
                                       className="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-3 py-1 text-base font-medium text-white shadow-sm hover:bg-red-700"
                                     >
@@ -177,14 +164,16 @@ export default function Cart({open, setOpen}) {
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                       <div className="mt-6">
-                        <Link
-                        onClick={() => {handleOrder(products);}}
-                          href="/cekStatus"
-                          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                        <button
+                        onClick={() => {
+                          handleOrder();
+                        }}
+                          // href="/cekStatus"
+                          className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                             {/* <Link href="/about"></Link> */}
                           Checkout
-                        </Link>
+                        </button>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>

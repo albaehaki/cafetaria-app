@@ -9,14 +9,14 @@ import {
     update,
     getDatabase,
   } from "firebase/database";
-import app from "@/Services/firebase";
+import app from "@/services/firebase";
 
 // context
 import { DataContext } from '@/Context'
 
 export const useHome = () => {
 // useContext
-const {data, setData, dataProduk, setDataProduk} = useContext(DataContext)
+const {data, setData, dataProduk, setDataProduk, listOrder, setListOrder} = useContext(DataContext)
 // firebase
 const realtimedb = getDatabase(app);
 // getData Realtime Database
@@ -27,14 +27,14 @@ const getData = (e) => {
       setData(databd);
 
       Object.entries(databd).map(([key, val], i) => {
-        setDataProduk(val)
-        // Object.entries(val).map(([key, value], i) => {
-        //   if (key === "card") {
-            // setData(val);
+        if(key === "listOrder"){
+          
+            setListOrder(val)
+        }else if(key === "product"){
            
-        //   } else {
-        //   }
-        // });
+            setDataProduk(val)
+        }
+       
       });
     });
   };
