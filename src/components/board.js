@@ -16,12 +16,12 @@ const TrelloBoard = ({listOrder,  setDetail,
     updateStatus(data, idOrder)
   }
 
-  const backend = window.ontouchstart === null ? TouchBackend : HTML5Backend;
+  // const backend = window.ontouchstart === null ? TouchBackend : HTML5Backend;
 
   return (
     <div className="board flex w-screen h-full py-5 px-5 ">
       <DndProvider  
-      backend={backend}
+      backend={HTML5Backend}
       options={{ enableTouchEvents: true, delayTouchStart: 100 }}
       >
         {["antrian", "sedang dimasak", "sudah matang"].map((list, i) => (
