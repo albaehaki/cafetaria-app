@@ -2,9 +2,9 @@ import { Fragment, useEffect, useState, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import 'tailwindcss/tailwind.css'
-import ListProduk from '../listProduk'
-import Board from '../board'
-import InfoOrder from '../infoOrder'
+import ListProduk from '../../components/listProduk'
+import Board from '../../components/board'
+import InfoOrder from '../../components/InfoOrder'
 
 // context
 import { DataContext } from '@/Context'
