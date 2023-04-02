@@ -1,8 +1,11 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import 'tailwindcss/tailwind.css'
 import ListProduk from '../listProduk'
+
+// hooks
+import { useHome } from '@/hooks/useHome'
      
 
 const user = {
@@ -25,6 +28,15 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const {getData, data, dataProduk} = useHome()
+
+
+  // useEffect
+  useEffect(() => {
+    getData()
+  }, [])
+  console.log(data)
+  console.log(dataProduk)
   return (
     <>
       {/*
@@ -192,7 +204,7 @@ export default function Example() {
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
         </main>
       </div>
-     < ListProduk />
+     < ListProduk dataProduk={dataProduk}/>
     </>
   )
 }
