@@ -9,7 +9,7 @@ import {
     update,
     getDatabase,
   } from "firebase/database";
-  import * as app from '@/services/firebase'
+  import app from '@/services/firebase'
 
 // context
 import { DataContext } from '@/Context'
