@@ -4,6 +4,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import 'tailwindcss/tailwind.css'
 import ListProduk from '../listProduk'
 import Board from '../board'
+import InfoOrder from '../infoOrder'
 
 // context
 import { DataContext } from '@/Context'
@@ -32,14 +33,21 @@ export default function Example() {
   const {listOrder} = useContext(DataContext)
   // hooks
   const {getData, data, dataProduk} = useHome()
-  const [pilihan, setPilihan] = useState("Daftar Pesanan")
+  const [pilihan, setPilihan] = useState("Info Order")
+  const [detail, setDetail] = useState([])
 
-
+ 
   // useEffect
   useEffect(() => {
     getData()
+    console.log(listOrder.filter((a,i) => a.statusPesanan === "antrian"), listOrder,'percobaan 1');
+    console.log(listOrder.map((a,i) => a.id), 'percobaan 2');
   }, [])
-  // console.log()
+  // useEffect(() => {
+  //   getData()
+  // }, [pilihan])
+  console.log(pilihan)
+  
  
   return (
     <>
@@ -70,6 +78,7 @@ export default function Example() {
                         {navigation.map((item) => (
                           <button
                           onClick={() => {
+                            // console.log(item)
                             setPilihan(item.name)
                           }}
                             key={item.name}
@@ -107,9 +116,13 @@ export default function Example() {
                 <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                   {navigation.map((item) => (
                     <Disclosure.Button
+                    onClick={() => {
+                      // console.log(item)
+                      setPilihan(item.name)
+                    }}
                       key={item.name}
                       as="a"
-                      href={item.href}
+                      // href={item.href}
                       className={classNames(
                         item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'block rounded-md px-3 py-2 text-base font-medium'
@@ -137,7 +150,8 @@ export default function Example() {
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
         </main>
       </div>
-      {pilihan === "Daftar Pesanan" ? <Board listOrder={listOrder} /> : < ListProduk dataProduk={dataProduk}/>}
+      {pilihan === "Daftar Pesanan" ? <Board listOrder={listOrder}  setDetail={setDetail}
+  setPilihan={setPilihan} /> : pilihan === "Daftar Produk" ? <ListProduk dataProduk={dataProduk}/> : <InfoOrder setPilihan={setPilihan} detail={detail} />}
       
      {/* < ListProduk dataProduk={dataProduk}/> */}
     </>

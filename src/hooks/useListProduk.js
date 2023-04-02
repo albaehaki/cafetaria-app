@@ -25,7 +25,7 @@ const addProduk = (e) => {
     // console.log(Object.keys(dataProduk).length)
     set(ref(realtimedb, `product/${dataProduk? Object.keys(dataProduk).length : 0}`),{
           id: e.id,
-          jumlah: 0,
+          jumlah: 1,
           nama: e.nama,
           harga: e.harga,
           image: e.image,

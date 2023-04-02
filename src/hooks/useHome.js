@@ -25,17 +25,18 @@ const getData = (e) => {
     onValue(ref(realtimedb), (snapshot) => {
       const databd = snapshot.val();
       setData(databd);
-
-      Object.entries(databd).map(([key, val], i) => {
-        if(key === "listOrder"){
-          
-            setListOrder(val)
-        }else if(key === "product"){
-           
-            setDataProduk(val)
+        if(databd !== null){
+        Object.entries(databd).map(([key, val], i) => {
+            if(key === "listOrder"){
+            
+                setListOrder(val)
+            }else if(key === "product"){
+            
+                setDataProduk(val)
+            }
+        
+        });
         }
-       
-      });
     });
   };
     
