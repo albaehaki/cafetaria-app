@@ -10,23 +10,26 @@ Fitur--------------------
 #pesan : membuat pesanan dan mengirimnya ke penjual
 #cek status pesanan : para pembeli dapat mengecek status pesanannya
 
----menambahkan produk
+##menambahkan produk##
 1. masuk ke halaman web appnya 
 2. pilih menu penjual
 3. pilih menu daftar produk di header
 4. lalu isi formnya
 5. kemudian tekan Add
----menghapus produk
+
+##menghapus produk##
 1. masuk ke halaman web appnya 
 2. pilih menu penjual
 3. pilih menu daftar produk di header
 4. cari produk yang ingin dihapus 
 5. kemudian tekan remove
----melihat pesanan
+
+##melihat pesanan##
 1. masuk ke halaman web appnya 
 2. pilih menu penjual
 3. maka akan muncul daftar pesanan
----tambah pesanan
+
+##tambah pesanan##
 1. masuk ke halaman web appnya 
 2. pilih menu pembeli
 3. maka akan muncul daftar menu
